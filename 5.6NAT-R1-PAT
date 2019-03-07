@@ -1,0 +1,22 @@
+en
+conf t
+
+ip route 0.0.0.0 0.0.0.0 g0/1
+
+int g0/0
+    desc Internal
+    ip ad 192.168.1.1 255.255.255.0
+    no sh
+
+int g0/1
+    desc External
+    ip ad 8.8.8.1 255.255.255.0
+    no sh
+
+ip access-list standard NAT
+    permit 192.168.1.0 0.0.0.255
+
+ip nat inside source list NAT interface g0/0 overload
+end
+
+wr
