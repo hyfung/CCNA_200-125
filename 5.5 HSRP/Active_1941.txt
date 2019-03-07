@@ -1,0 +1,27 @@
+en
+conf t
+
+hostname Active
+
+int g0/1
+    desc Inside
+    ip ad 192.168.0.252 255.255.255.0
+    no sh
+    standby 1 ip 192.168.0.254
+    standby 1 priority 255
+    standby 1 preempt
+    standby 1 track g0/0
+    standby 1 timer 1 2
+
+int g0/0
+    desc Outside
+    ip ad 10.0.0.1 255.255.255.0
+    no sh
+
+router eigrp 1
+    network 10.0.0.0 0.0.0.255
+    network 192.168.0.0 0.0.0.255
+    no auto
+
+end
+wr

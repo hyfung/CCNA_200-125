@@ -1,0 +1,24 @@
+en
+conf t
+
+hostname server
+
+username client password cisco
+
+bba-group pppoe INE
+    virtual-template 1
+
+interface virtual-template 1
+    ip ad 1.2.1.1 255.255.255.0
+    peer default ip address pool MyPool
+    ppp auth chap
+
+ip local pool MyPool 1.2.1.2 1.2.1.254
+
+int g0/0
+    no ip address
+    duplex auto
+    speed auto
+    pppoe enable group INE
+end
+

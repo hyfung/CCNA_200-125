@@ -1,0 +1,19 @@
+!Router 1
+!Model: PT Router
+en
+conf t
+hostname R1
+int s 2/0
+    encap ppp
+    ip ad 10.0.0.1 255.255.255.0
+    no sh
+
+!Router 2
+!Model: PT Router
+en
+conf t
+hostname R2
+int s 2/0
+    encap ppp
+    ip ad 10.0.0.2 255.255.255.0
+    no sh

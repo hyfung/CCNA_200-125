@@ -1,0 +1,54 @@
+!SW1
+en
+conf t
+
+ip routing
+
+int range g0/1-2
+    no switchport
+exit
+
+int g0/1
+    desc Edge Router1: 10.0.0.2
+    ip ad 10.0.0.1 255.255.255.252
+    ip summary eigrp 1 192.168.0.0 255.255.0.0 1
+    no sh
+int g0/2
+    desc Edge Router2: 10.0.0.6
+    ip ad 10.0.0.5 255.255.255.252
+    ip summary eigrp 1 192.168.0.0 255.255.0.0 1
+    no sh
+
+vtp mode server
+vtp domain cisco
+
+vlan 10
+vlan 20
+vlan 30
+
+int vlan 10
+    ip ad 192.168.10.1 255.255.255.0
+int vlan 20
+    ip ad 192.168.20.1 255.255.255.0
+int vlan 30
+    ip ad 192.168.30.1 255.255.255.0
+
+int f0/1
+    sw mo ac
+    sw ac vl 10
+    span portfast
+int f0/2
+    sw mo ac
+    sw ac vl 20
+    span portfast
+int f0/3
+    sw mo ac
+    sw ac vl 30
+    span portfast
+
+router eigrp 1
+    network 192.168.0.0 0.0.255.255
+    network 10.0.0.0 0.0.0.255
+    no auto-summary
+end
+wr

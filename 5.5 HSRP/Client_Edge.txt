@@ -1,0 +1,25 @@
+en
+conf t
+
+hostname Client_edge
+
+int lo 1
+    ip ad 8.8.8.8 255.255.255.255
+
+int g0/0
+    ip ad 10.0.0.2 255.255.255.0
+    no sh
+
+int g0/1
+    ip ad 10.0.1.2 255.255.255.0
+    no sh
+exit
+
+router ei 1
+    network 10.0.0.0 0.0.0.255
+    network 10.0.1.0 0.0.0.255
+    network 8.8.8.8 0.0.0.0
+    no auto
+
+end
+wr

@@ -1,0 +1,13 @@
+en
+conf t
+
+hostname ISP
+
+int s 2/0
+    desc Client-facing side
+    encap ppp
+    ip ad 10.0.0.1 255.255.255.0
+    no sh
+
+end
+

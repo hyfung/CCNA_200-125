@@ -1,0 +1,23 @@
+en
+conf t
+
+ip name-server 8.8.8.8
+
+ip dns server
+ip dns spoofing 8.8.8.8
+
+ip dhcp pool LAN
+    default-router 192.168.0.1
+    dns-server 192.168.0.1
+    network 192.168.0.0
+
+ip dhcp excluded-addr 192.168.0.1 192.168.0.99
+ip dhcp excluded-addr 192.168.0.200 192.168.0.254
+
+int g0/0
+    desc Internal
+    ip ad 192.168.0.1 255.255.255.0
+    no sh
+
+int g0/1
+    desc External

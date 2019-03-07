@@ -1,0 +1,17 @@
+en
+conf t
+
+hostname client
+
+interface Dialer 1
+    ip address negotiated
+    encapsulation ppp
+    dialer pool 1
+
+interface g0/0
+    no ip address
+    duplex auto
+    speed auto
+    pppoe-client dial-pool-number 1
+end
+
