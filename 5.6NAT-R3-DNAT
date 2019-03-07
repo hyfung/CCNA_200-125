@@ -1,0 +1,23 @@
+en
+conf t
+
+ip route 0.0.0.0 0.0.0.0 g 0/1
+
+ip nat pool NAT 8.8.8.3 8.8.8.10 netmask 255.255.255.0
+
+access-list 1 permit 192.168.3.0 0.0.0.255
+
+int g0/0
+    desc Inside
+    ip nat inside
+    ip ad 192.168.3.1 255.255.255.0
+    no sh
+
+int g0/1
+    desc Outside
+    ip nat outside
+    ip ad 8.8.8.3 255.255.255.0
+    no sh
+
+ip nat inside source list 1 pool NAT
+!ip nat inside source list 1 pool NAT overload
